@@ -39,24 +39,59 @@ async function getRequestObject(req, res, next) {
 
 async function generateRequestObject(){
     console.log('startProcess');
-    var request;
-    
+    let request;
+
+    // siop_rp = await DID_SIOP.RP.getRP(
+    //     'localhost:5001/home', // RP's redirect_uri
+    //     'did:key:2f6jDVaGpBqoimg8GAKb9FiESetiy4FLDtwNXEoUhn6qabHEjWsyx65twBDs2q3wrrjXvmNjJwUirWZsJWBPJjYjSn9DWCWrGWReKutxHgCyRjPKQMfzEJNvh3Tr3ZPYgXU8e8pRRnAB98tStraqVVkr4LFFqK5WMnkguFv3GJixrE9Fx4', // RP's did
+    //     {
+    //         "jwks_uri": "https://uniresolver.io/1.0/identifiers/did:key:2f6eCjtFootvZEahvkQZb3vnVbVzJibSgKudXvMYZq5XzBBQSFCksqUqhJtHAQ6LeVV9S4BwAnk1JjouNQQc3cdoELgTC4uGdyvXNrm1L6D1uYRybcMVihJvEUiy3J91vbvTTpXqN84Bot5gHkGnmH6t1YYrh9QG8z5MqxpQycCwapw3qA;transform-keys=jwks",
+    //         "id_token_signed_response_alg": ["ES256K", "EdDSA", "RS256"]
+    //     },
+    //     {
+    //         "@context": [
+    //             "https://w3id.org/did/v0.11"
+    //         ],
+    //         "id": "did:key:2f6jDVaGpBqoimg8GAKb9FiESetiy4FLDtwNXEoUhn6qabHEjWsyx65twBDs2q3wrrjXvmNjJwUirWZsJWBPJjYjSn9DWCWrGWReKutxHgCyRjPKQMfzEJNvh3Tr3ZPYgXU8e8pRRnAB98tStraqVVkr4LFFqK5WMnkguFv3GJixrE9Fx4",
+    //         "publicKey": [
+    //             {
+    //                 "id": "did:key:2f6jDVaGpBqoimg8GAKb9FiESetiy4FLDtwNXEoUhn6qabHEjWsyx65twBDs2q3wrrjXvmNjJwUirWZsJWBPJjYjSn9DWCWrGWReKutxHgCyRjPKQMfzEJNvh3Tr3ZPYgXU8e8pRRnAB98tStraqVVkr4LFFqK5WMnkguFv3GJixrE9Fx4#veri-key1",
+    //                 "type": "Secp256k1VerificationKey2018",
+    //                 "controller": "did:key:2f6jDVaGpBqoimg8GAKb9FiESetiy4FLDtwNXEoUhn6qabHEjWsyx65twBDs2q3wrrjXvmNjJwUirWZsJWBPJjYjSn9DWCWrGWReKutxHgCyRjPKQMfzEJNvh3Tr3ZPYgXU8e8pRRnAB98tStraqVVkr4LFFqK5WMnkguFv3GJixrE9Fx4",
+    //                 "ethereumAddress": "0x027b83ad6afb1209f3c82ebeb08c0c5fa9bf6724548506f2fb4f991e2287a77090",
+    //                 "publicKeyHex": "027b83ad6afb1209f3c82ebeb08c0c5fa9bf6724548506f2fb4f991e2287a77090"
+    //             }
+    //         ],
+    //         "authentication": [
+    //             {
+    //                 "type": "Secp256k1VerificationKey2018",
+    //                 "publicKey": "027b83ad6afb1209f3c82ebeb08c0c5fa9bf6724548506f2fb4f991e2287a77090"
+    //             }
+    //         ]
+    //     }
+    // );
     siop_rp = await DID_SIOP.RP.getRP(
         'localhost:5001/home', // RP's redirect_uri
-        'did:ethr:0xA51E8281c201cd6Ed488C3701882A44B1871DAd6', // RP's did
+        'did:key:z6Mkjs1Zf4aLVQkBRvpBowYQXWSWwp8Z8H58539WVLc4AsTB', // RP's did
         {
-            "jwks_uri": "https://uniresolver.io/1.0/identifiers/did:example:0xab;transform-keys=jwks",
+            "jwks_uri": "https://uniresolver.io/1.0/identifiers/did:key:z6Mkjs1Zf4aLVQkBRvpBowYQXWSWwp8Z8H58539WVLc4AsTB;transform-keys=jwks",
             "id_token_signed_response_alg": ["ES256K-R", "EdDSA", "RS256"]
         }
-    )
+    );
     console.log('Got RP instance ....');
+    // siop_rp.addSigningParams(
+    //     '97ddae0f3a25b92268175400149d65d6887b9cefaf28ea2c078e05cdc15a3c0a', // Private key
+    //     'did:key:2f6jDVaGpBqoimg8GAKb9FiESetiy4FLDtwNXEoUhn6qabHEjWsyx65twBDs2q3wrrjXvmNjJwUirWZsJWBPJjYjSn9DWCWrGWReKutxHgCyRjPKQMfzEJNvh3Tr3ZPYgXU8e8pRRnAB98tStraqVVkr4LFFqK5WMnkguFv3GJixrE9Fx4#veri-key1',
+    //     // Corresponding authentication method in RP's did document (to be used as kid value for key)
+    //     DID_SIOP.KEY_FORMATS.HEX, //Format in which the key is supplied. List of values is given below
+    //     DID_SIOP.ALGORITHMS['ES256K']
+    // );
     siop_rp.addSigningParams(
-        '8329a21d9ce86fa08e75354469fb8d78834f126415d5b00eef55c2f587f3abca', // Private key
-        'did:ethr:0xA51E8281c201cd6Ed488C3701882A44B1871DAd6#owner', // Corresponding authentication method in RP's did document (to be used as kid value for key)
-        DID_SIOP.KEY_FORMATS.HEX, //Format in which the key is supplied. List of values is given below
+        'zs2NsqieKe3ttzJ8a9yjuNBeDF5Pet8SQUF35aC7mhm3UxTJXWfdWSYXFUmnLFbWZ98SPCWS2mncxVHKzVivXiM', // Private key
+        'did:key:z6Mkjs1Zf4aLVQkBRvpBowYQXWSWwp8Z8H58539WVLc4AsTB', // Corresponding authentication method in RP's did document (to be used as kid value for key)
+        DID_SIOP.KEY_FORMATS.BASE58, //Format in which the key is supplied. List of values is given below
         DID_SIOP.ALGORITHMS['ES256K-R']
     );
-
     console.log('RP SigningParams added ...');
     request = await siop_rp.generateRequest();
 
